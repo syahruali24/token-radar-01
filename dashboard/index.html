@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090f16">
+  <title>Token Launch Radar · make.fun</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Token Launch Radar home"><span class="brand-mark">◎</span><span>signal<span class="brand-dot">/</span>radar</span></a>
+    <div class="top-meta"><span class="live-dot"></span><span>SNAPSHOT RADAR</span><span class="meta-divider"></span><span id="as-of-label">AS OF —</span></div>
+    <a class="top-link" href="#methodology">Methodology <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span>ONCHAIN INTELLIGENCE <span class="eyebrow-index">/ 01</span></div>
+        <h1>Find the signal<br><span>before the token.</span></h1>
+        <p>A snapshot-driven radar for protocols that record no token. Follow the value model, explore each protocol, and plan activity with clear costs and time.</p>
+      </div>
+      <div class="hero-note"><span class="note-icon">✳</span><div><strong>Data frozen in time</strong><span id="source-label">DefiLlama protocol snapshot</span></div><span class="note-arrow">↘</span></div>
+    </section>
+    <section class="metric-grid" aria-label="Radar summary">
+      <article class="metric metric-primary"><div class="metric-label">RADAR COVERAGE <span>01</span></div><div class="metric-value" id="coverage-value">—</div><div class="metric-foot"><span class="metric-accent">watchlist protocols</span><span id="coverage-sub">— rows ranked</span></div></article>
+      <article class="metric"><div class="metric-label">IMPLIED VALUE MODEL <span>02</span></div><div class="metric-value" id="multiple-value">—</div><div class="metric-foot"><span>median market / TVL</span><span id="multiple-sub">— samples</span></div></article>
+      <article class="metric"><div class="metric-label">LIVE TOKEN MARKET <span>03</span></div><div class="metric-value" id="live-count">—</div><div class="metric-foot"><span>market values shown apart</span><span>top market caps</span></div></article>
+    </section>
+    <section class="board-section" id="board">
+      <div class="section-heading"><div><div class="section-kicker"><span>01</span> / PRE-TOKEN RADAR</div><h2>The launch board</h2><p>Ranked by implied value · watchlist is the floor</p></div><div class="board-totals"><span class="board-count" id="board-count">—</span><span>PROTOCOLS</span></div></div>
+      <div class="controls">
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search protocols" autocomplete="off"><kbd>/</kbd></label>
+        <label class="select-wrap"><span class="sr-only">Category</span><select id="category-filter"><option value="">All categories</option></select><span class="select-caret">⌄</span></label>
+        <label class="select-wrap"><span class="sr-only">Chain</span><select id="chain-filter"><option value="">All chains</option></select><span class="select-caret">⌄</span></label>
+        <label class="watch-toggle"><input id="watch-filter" type="checkbox"><span class="toggle-track"></span><span>Watchlist only</span></label>
+        <button id="clear-filters" class="clear-button" type="button">Reset <span>↺</span></button>
+      </div>
+      <div class="table-shell"><table class="board-table"><thead><tr>
+        <th><button data-sort="rank"># <span class="sort-indicator">↕</span></button></th>
+        <th><button data-sort="name">Protocol <span class="sort-indicator">↕</span></button></th>
+        <th>Category</th><th>Chains</th>
+        <th class="numeric"><button data-sort="tvl_usd">TVL <span class="sort-indicator">↕</span></button></th>
+        <th class="numeric"><button data-sort="change_7d">7D <span class="sort-indicator">↕</span></button></th>
+        <th class="numeric"><button data-sort="age_days">Age <span class="sort-indicator">↕</span></button></th>
+        <th class="numeric"><button data-sort="implied_value_usd">Implied value <span class="sort-indicator">↕</span></button></th>
+        <th>Signal</th>
+      </tr></thead><tbody id="board-rows"></tbody></table><div id="empty-state" class="empty-state" hidden>No protocols match these filters. <button id="empty-reset" type="button">Clear filters</button></div></div>
+      <div class="table-footer"><span id="table-range">Showing —</span><span>VALUE IS A MODEL OUTPUT, NOT A TOKEN PRICE <i></i></span></div>
+    </section>
+    <section class="live-section" id="live">
+      <div class="section-heading compact-heading"><div><div class="section-kicker"><span>02</span> / MARKET CONTEXT</div><h2>Live-token market</h2><p>Market caps for token-bearing protocols · separate from the launch board</p></div><div class="live-mark">MARKET DATA <span>↗</span></div></div>
+      <div class="table-shell"><table class="live-table"><thead><tr><th>#</th><th>Protocol</th><th>Category</th><th>Chains</th><th class="numeric">TVL</th><th class="numeric">Market cap</th></tr></thead><tbody id="live-rows"></tbody></table></div>
+    </section>
+    <section class="method-section" id="methodology">
+      <div class="section-heading compact-heading"><div><div class="section-kicker"><span>03</span> / HOW TO READ THIS</div><h2>Methodology &amp; limits</h2><p>Every estimate is derived from one frozen protocol snapshot.</p></div></div>
+      <div class="method-grid">
+        <article class="method-card formula-card"><div class="method-number">01 — VALUE MODEL</div><h3>One model, every row.</h3><div class="formula"><span>base</span> = TVL × <b id="formula-multiple">—</b><br><span>growth_pct</span> = clamp(7d change, −60, 120)<br><span>growth multiplier</span> = 1 + (growth_pct ÷ 100) × 0.5<br><span>maturity multiplier</span> = 0.6 + min(age, 1,095) ÷ 1,095 × 0.4<br><strong>implied value</strong> = clamp(round(base × growth multiplier × maturity multiplier), $1, $100T)</div><p class="method-note" id="formula-note">Market multiple calculated from token-bearing snapshot records.</p></article>
+        <article class="method-card"><div class="method-number">02 — CANDIDATE RULE</div><h3>Filter the noise.</h3><p>Pre-token records require null market cap, CoinGecko ID and symbol. Candidate names exclude version markers, wrapped or staked products, and exchange-led products. Excluded categories include CEX, Bridge, Canonical Bridge, Liquid Staking, Liquid Restaking and Restaked BTC.</p><div class="rule-pill"><span class="rule-dot"></span> Snapshot record only <span>·</span> no future token claims</div></article>
+        <article class="method-card"><div class="method-number">03 — SNAPSHOT</div><h3>Fixed source, clear limits.</h3><p id="snapshot-copy">—</p><p class="disclaimer">A protocol that records no token may still issue one or have a token missing from its record. Implied value is this radar’s estimate, not a forecast or promise.</p></article>
+      </div>
+    </section>
+    <footer><a class="brand footer-brand" href="#top"><span class="brand-mark">◎</span><span>signal<span class="brand-dot">/</span>radar</span></a><span>BUILT FOR THE PRE-TOKEN FRONTIER <i></i> SNAPSHOT ONLY</span><a href="#top" class="back-top">BACK TO TOP ↑</a></footer>
+  </main>
+  <div id="detail-backdrop" class="detail-backdrop" hidden></div>
+  <aside id="detail-panel" class="detail-panel" aria-label="Protocol detail" aria-hidden="true"></aside>
+  <script src="../data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
